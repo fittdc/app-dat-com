@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Cơm gà xối mỡ",
+    "price": 35000,
+    "image": "https://i.imgur.com/8z9qYAf.jpg"
+  },
+  {
+    "name": "Cơm sườn nướng",
+    "price": 40000,
+    "image": "https://i.imgur.com/0ZzU8yo.jpg"
+  },
+  {
+    "name": "Cơm chay thập cẩm",
+    "price": 30000,
+    "image": "https://i.imgur.com/GZr7rfl.jpg"
+  }
+]

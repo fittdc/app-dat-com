@@ -2,16 +2,16 @@
   {
     "name": "Cơm gà xối mỡ",
     "price": 35000,
-    "image": "https://i.imgur.com/8z9qYAf.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Com_ga_xoi_mo.jpg/640px-Com_ga_xoi_mo.jpg"
   },
   {
     "name": "Cơm sườn nướng",
     "price": 40000,
-    "image": "https://i.imgur.com/0ZzU8yo.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Com_suon_nuong.jpg/640px-Com_suon_nuong.jpg"
   },
   {
     "name": "Cơm chay thập cẩm",
     "price": 30000,
-    "image": "https://i.imgur.com/GZr7rfl.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Com_chay.jpg/640px-Com_chay.jpg"
   }
 ]

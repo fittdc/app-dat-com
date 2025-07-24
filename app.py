@@ -1,59 +1,43 @@
 import streamlit as st
 import json
-from datetime import datetime
 
-def load_menu():
-    with open("menu.json", "r", encoding="utf-8") as f:
-        return json.load(f)
+st.set_page_config(page_title="Ứng dụng Đặt Cơm", layout="wide")
 
-def save_order(order):
-    try:
-        with open("orders.json","r",encoding="utf-8") as f:
-            orders = json.load(f)
-    except:
-        orders = []
-    orders.append(order)
-    with open("orders.json","w",encoding="utf-8") as f:
-        json.dump(orders, f, ensure_ascii=False, indent=2)
+# Tiêu đề
+st.title("🍱 Ứng dụng Đặt Cơm Online")
+st.markdown("Chọn món ăn bạn muốn đặt bên dưới:")
 
-st.set_page_config(page_title="App Đặt Cơm", layout="wide")
-st.title("🍱 Ứng dụng Đặt Cơm")
+# Tải dữ liệu từ menu.json
+with open("menu.json", "r", encoding="utf-8") as f:
+    menu = json.load(f)
 
-menu = load_menu()
-selected = []
+# Khởi tạo danh sách đơn hàng
+if "orders" not in st.session_state:
+    st.session_state.orders = []
+
+# Hiển thị danh sách món ăn
 cols = st.columns(3)
-
-for i, item in enumerate(menu):
-    with cols[i % 3]:
-        st.image(item["image"], width=200)
+for index, item in enumerate(menu):
+    with cols[index % 3]:
+        st.image(item["image"], width=250)
         st.markdown(f"### {item['name']}")
-        st.markdown(f"💰 {item['price']:,} VND")
-        qty = st.number_input(f"Số lượng - {item['name']}", 0, 20, 0, key=i)
-        if qty > 0:
-            selected.append({"name": item["name"], "price": item["price"], "quantity": qty})
+        st.markdown(f"**Giá:** {item['price']:,}đ")
+        if st.button(f"🛒 Đặt món", key=f"order_{index}"):
+            st.session_state.orders.append(item)
+            st.success(f"Đã đặt: {item['name']}")
 
+# Hiển thị giỏ hàng
 st.markdown("---")
-st.header("📝 Thông tin đặt hàng")
+st.header("🧾 Món bạn đã đặt")
 
-with st.form("order_form"):
-    name = st.text_input("Tên người đặt")
-    phone = st.text_input("Số điện thoại")
-    note = st.text_area("Ghi chú (nếu cần)")
-    submit = st.form_submit_button("📤 Gửi đơn hàng")
-
-    if submit:
-        if not name or not phone:
-            st.warning("Vui lòng nhập tên và số điện thoại.")
-        elif not selected:
-            st.warning("Bạn chưa chọn món.")
-        else:
-            order = {
-                "name": name,
-                "phone": phone,
-                "note": note,
-                "items": selected,
-                "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            }
-            save_order(order)
-            st.success("✅ Đơn hàng đã được gửi thành công!")
-            st.balloons()
+if st.session_state.orders:
+    total = 0
+    for i, order in enumerate(st.session_state.orders):
+        st.write(f"- {order['name']} ({order['price']:,}đ)")
+        total += order["price"]
+    st.markdown(f"### 💰 **Tổng cộng: {total:,}đ**")
+    if st.button("🗑️ Xoá tất cả món đã đặt"):
+        st.session_state.orders = []
+        st.experimental_rerun()
+else:
+    st.info("Bạn chưa đặt món nào.")
